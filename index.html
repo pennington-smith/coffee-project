@@ -7,85 +7,108 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Coffee Project</title>
     <link rel="stylesheet" href="./css/style.css">
-    <link rel="stylesheet" href="./css/bootstrap.min.css">
 </head>
 <body>
-<header class="container d-flex">
-    <div class="row align-items-center">
-        <div class="col d-flex justify-content-center align-items-center">
-            <h1>Coffee!</h1>
-        </div>
-    </div>
-</header>
-        <div class="col d-flex justify-content-center">
-            <form>
-                <label for="roast-selection"></label>
-                <select id="roast-selection">
-                    <option selected value="">Roast Selection</option>
-                    <option value="light">Light</option>
-                    <option value="medium">Medium</option>
-                    <option value="dark">Dark</option>
-                    <option value="all">All</option>
-                </select>
-            </form>
-        </div>
-<div class="container">
-        <div class="row d-flex justify-content-center">
-            <div class=" col align-items-center input-group input-group-md">
-                <input id="search" type="search" aria-label="Search coffees"
-                       placeholder="Search coffees...">
+<div class="page-wrapper" id="grad">
+    <header class="container">
+        <div class="row">
+            <div class="col d-flex flex-column align-items-center">
+                <h1 class="h1-padding text-center" style="font-size: 100px">Cosmic Coffee</h1>
+                <p class="text-center p-header-padding">simple coffee with a modern touch</p>
             </div>
         </div>
-        <div class="col d-flex justify-content-center ">
-            <form id="add-form">
-                <h3><label class="form-label" for="add-name">Coffee Name</label></h3>
-                <input class="form-control" type="text" name="add-name" id="add-name" placeholder="Enter Coffee Name">
-                <h3><label class="form-label" for="add-roast">Roast Type</label></h3>
-                <input class="form-control" type="text" name="add-roast" id="add-roast" placeholder="Enter Roast Type">
-                <div>
-                    <button class="btn btn-primary add" data-add>Add Coffee</button>
+    </header>
+    <section class="container">
+        <div class="row">
+            <div class="col">
+                <ul class="nav justify-content-between">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#coffees-container">Coffees</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#add-coffees">Create Your Own Blend</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About Us</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+    <section class="container" id="coffees-container">
+        <div class="row">
+            <div class="col d-flex justify-content-center">
+                <h2 class="coffee-sub-head">Coffees</h2>
+            </div>
+        </div>
+    </section>
+    <section class="container coffee-container">
+        <div class="row justify-content-between border-b">
+            <div class="col flex-grow-0 flex-shrink-1 p-0">
+                <form class="custom-form">
+                    <label for="roast-selection" class="custom-label"></label>
+                    <div class="custom-select">
+                        <select id="roast-selection" class="styled-select">
+                            <option selected value="">Roast Selection</option>
+                            <option value="light">Light</option>
+                            <option value="medium">Medium</option>
+                            <option value="dark">Dark</option>
+                            <option value="all">All</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="col flex-grow-0 flex-shrink-1">
+                <div class="input-group input-group-md">
+                    <nav class="navbar bg-body-tertiary">
+                        <div class="container-fluid search-box">
+                            <form class="d-flex" role="search">
+                                <input class="form-control me-2" type="search" placeholder="Coffee Name" aria-label="Search" id="search">
+                                <button class="btn btn-outline-success" type="submit" data-search>Search</button>
+                            </form>
+                        </div>
+                    </nav>
                 </div>
-            </form>
-
+            </div>
         </div>
+        <div class="row">
+            <div class="col">
+                <div id="coffees" class="d-flex flex-wrap justify-content-center gap-3">
+                    <!--            <div class="col">-->
+                    <!--                <p>${coffee.name}</p>-->
+                    <!--            </div>-->
+                    <!--            <div class="col">-->
+                    <!--                <p>${coffee.roast}</p>-->
+                    <!--            </div>-->
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="container" id="add-coffees">
+        <div class="row">
+            <div class="col d-flex justify-content-center">
+                <h2 class="add-sub-head">Create Your Own Blend</h2>
+            </div>
+        </div>
+    </section>
+    <section class="container add-container">
+        <div class="row">
+            <div class="col">
+                <form id="add-form">
+                    <h3><label class="form-label" for="add-name">Coffee Name</label></h3>
+                    <input class="form-control" type="text" name="add-name" id="add-name" placeholder="Create Coffee Name">
+                    <h3><label class="form-label" for="add-roast">Roast Type</label></h3>
+                    <input class="form-control" type="text" name="add-roast" id="add-roast" placeholder="Create Roast Type">
+                    <div>
+                        <button class="btn btn-outline-success add" data-add>Create Coffee</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <script type="module" src="./js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </div>
-
-
-
-
-
-<section class="container">
-    <div class="row">
-        <div  id="coffees">
-            <!--            <div class="col">-->
-            <!--                <p>${coffee.name}</p>-->
-            <!--            </div>-->
-            <!--            <div class="col">-->
-            <!--                <p>${coffee.roast}</p>-->
-            <!--            </div>-->
-        </div>
-    </div>
-</section>
-
-
-<!--    <div id="coffees">-->
-<!--        <div class="coffee-container">-->
-<!--            <h2>Coffee Name 1</h2>-->
-<!--            <p>Type of Roast: Roast Type 1</p>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--    -->
-<!--    <table>-->
-<!--        <thead>-->
-<!--            <tr>-->
-<!--                <th>ID</th>-->
-<!--                <th>NAME</th>-->
-<!--                <th>ROAST</th>-->
-<!--            </tr>-->
-<!--        </thead>-->
-<!--        <tbody id="coffees"></tbody>-->
-<!--    </table>-->
-
-<script type="module" src="./js/main.js"></script>
 </body>
 </html>
