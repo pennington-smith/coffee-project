@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Coffee Project</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <script src="js/utils.js"></script>
+</head>
+<body>
+
+<div class="page-wrapper container d-flex flex-column justify-content-evenly">
+    <header class="row d-flex align-items-center pb-5 " style="height: 100px">
+        <div class="col d-flex justify-content-between gap-5 ">
+            <h3>COFFEE PROJECT</h3>
+            <h3>2023</h3>
+            <h3>MORGAN | NATHAN </h3>
+        </div>
+    </header>
+
+    <section class="hero row">
+
+
+    </section>
+
+    <section class="container">
+
+    <div class="row search d-flex pt-3" >
+        <div class="row d-flex align-items-center ">
+            <div class=" col d-flex  justify-content-center gap-3">
+                <h4>Search</h4>
+                <input class="form-control" type="text" placeholder="coffee search" aria-label="default input example" id="search">
+
+            </div>
+            <div class="col d-flex justify-content-center gap-3">
+                <h4>Roast</h4>
+                <label for="roast-selection"></label>
+                <select id = "roast-selection" class="form-select" aria-label="Default select example">
+                    <option value="Light">Light</option>
+                    <option value="Medium">Medium</option>
+                    <option value="Dark">Dark</option>
+                    <option value="all">All</option>
+                </select>
+            </div>
+            <div class="container flex-row justify-content-center ">
+                <div class="row">
+                <form id="add-form" class="col">
+                    <h4><label class="form-label" for="add-name">Coffee Name</label></h4>
+                    <input class="form-control" type="text" name="add-name" id="add-name" placeholder="Enter Coffee Name">
+                    <h4><label class="form-label" for="add-roast">Roast Type</label></h4>
+                    <input class="form-control" type="text" name="add-roast" id="add-roast" placeholder="Enter Roast Type">
+                    <div>
+                        <button class="btn btn-primary add" data-add>Add Coffee</button>
+                    </div>
+                </form>
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+    </section>
+
+    <section class="cardholder container d-flex pt-5 gap-5 flex-wrap" id="coffees">
+
+<!--        <div class="coffeecard p-3 row" >-->
+<!--            <div class="colorbg col p-3 ">-->
+<!--                <h4>Roast</h4>-->
+<!--                <h2>Coffee Name</h2>-->
+<!--            </div>-->
+<!--            <div class="btn-container col d-flex align-items-center   gap-2">-->
+<!--                <button type="button" class=" btn-edit " data-edit>Edit </button>-->
+<!--                <button type="button" class=" btn-delete" data-delete>Delete</button>-->
+<!--            </div>-->
+<!--        </div>-->
+
+    </section>
+
+    <footer class="d-flex container pt-5">
+
+    </footer>
+</div>
+
+<script type="module" src="./js/main2.js"></script>
+
+
+</body>
+
+</html>

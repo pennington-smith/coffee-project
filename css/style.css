@@ -7,3 +7,66 @@ td, th {
     border: 1px solid black;
     padding: 5px 10px;
 }
+
+
+
+.hero{
+    height: 500px;
+    background-color: #9eeaf9;
+}
+
+.search-circle{
+    background-color: #0dcaf0;
+    border-radius: 900px;
+    height: 100px;
+    width: 100px;
+}
+.search-circle h4{
+    font-size: 14px;
+
+}
+
+
+.coffeecard {
+
+    height: 322px;
+    width: 286px;
+    border: black solid;
+    border-radius: 10px;
+}
+
+.colorbg {
+    height: 80%;
+    background-color: #83489E;
+    border-radius: 10px 10px 0px 0px;
+    color: white;
+}
+
+.btn-delete{
+    background-color: black;
+    color: white;
+    padding: 5px;
+    border-radius: 10px;
+
+}
+.btn-edit{
+    background-color: white;
+    border: black solid;
+    padding: 5px 8px;
+
+    border-radius: 10px;
+
+
+
+}
+
+.form-control{
+    width: 50%;
+}
+.form-select{
+    width: 50%;
+}
+
+.footer{
+    height: 300px;
+}

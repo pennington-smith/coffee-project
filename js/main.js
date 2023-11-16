@@ -16,41 +16,96 @@ const coffees = [
 	{ id: 13, name: "Italian", roast: "dark" },
 	{ id: 14, name: "French", roast: "dark" },
 ];
-localStorage.setItem("coffees", JSON.stringify(coffees));
-let storedCoffees = localStorage.getItem("coffees");
+// localStorage.setItem("coffees", JSON.stringify(coffees));
+// const storedCoffees = localStorage.getItem("coffees");
 
 // to remove a coffee
 // localStorage.removeItem("coffees");
 
 const addCoffee = (coffeeName, roastType) => {
-	storedCoffees = JSON.parse(localStorage.getItem("coffees")) || [];
-	const newCoffee = { name: coffeeName, roast: roastType };
-	storedCoffees.push(newCoffee);
-	localStorage.setItem("coffees", JSON.stringify(newCoffee));
-	const storedCoffee = JSON.parse(localStorage.getItem("coffees"));
-	renderCoffeeElement(storedCoffee);
+	const coffees = JSON.parse(localStorage.getItem("coffees")) || [];
+	const newCoffee = {
+		name: coffeeName,
+		roast: roastType,
+		userGenerated: true,
+		id: Date.now()
+	};
+	coffees.push(newCoffee);
+	localStorage.setItem("coffees", JSON.stringify(coffees));
+	updateCoffees();
 };
 
 const renderCoffeeElement = (coffee) => {
 	const coffeeElement = document.createElement("div");
-	coffeeElement.classList.add(`d-flex`)
+	coffeeElement.classList.add(`p-3`, `row`, `coffeecard`)
 	coffeeElement.innerHTML = `
-		<div class="col">
-			<p>${coffee.name}</p>
-		</div>
-		<div class="col">
-			<p>${coffee.roast}</p>
-		</div>
+       <div class="colorbg col p-3">
+          <h4>${coffee.roast}</h4>
+          <h2>${coffee.name}</h2>
+       </div>
+       <div class="btn-container col d-flex align-items-center   gap-2">
+          
+      
+       ${coffee.userGenerated ? `<button class="btn-delete btn-danger" data-delete>Delete</button>` : ``}
+       ${coffee.userGenerated ? `<button class="btn-edit btn-secondary" data-edit>Edit</button>` : ``}
+        </div>
     `;
-	document.querySelector("#coffees").appendChild(coffeeElement);
-	// const deleteBtn = coffeeElement.querySelector("button[data-delete]");
-	// deleteBtn.addEventListener("click", (e) => {
-	// 	coffeeElement.remove();
-	// });
-	// return coffeeElement;
+	const deleteButton = coffeeElement.querySelector(`button[data-delete]`);
+	if (deleteButton) {
+		deleteButton.addEventListener(`click`, e => {
+			coffeeElement.remove();
+			removeFromLocalStorage(coffee.id);
+		});
+	}
+	document.querySelector("#coffees").prepend(coffeeElement);
 };
+const registerCoffees = (coffees) => {
+	if (localStorage.getItem("coffees")) {
+		return;
+	}
+	localStorage.setItem("coffees", JSON.stringify(coffees))
+}
+function removeFromLocalStorage(coffeeId) {
+	const coffees = JSON.parse(localStorage.getItem("coffees")) || [];
+	const index = coffees.findIndex(coffee => coffee.id === coffeeId);
 
-const updateCoffees = (coffees) => {
+	if (index !== -1) {
+		coffees.splice(index, 1);
+		localStorage.setItem("coffees", JSON.stringify(coffees));
+	}
+}
+function showEditForm(coffee) {
+	const editForm = document.createElement("form");
+	editForm.innerHTML = `
+            <label for="editName">Name:</label>
+            <input type="text" id="editName" value="${coffee.name}" required>
+            <label for="editRoast">Roast:</label>
+            <input type="text" id="editRoast" value="${coffee.roast}" required>
+            <button type="submit" class="btn btn-primary" data-save>Edit</button>
+        `;
+
+	editForm.addEventListener("submit", (event) => {
+		event.preventDefault();
+
+		coffee.name = editForm.querySelector("#editName").value;
+		coffee.roast = editForm.querySelector("#editRoast").value;
+
+		coffeeElement.querySelector(".col:first-child p").textContent = coffee.name;
+		coffeeElement.querySelector(".col:last-child p").textContent = coffee.roast;
+
+		updateLocalStorage(coffees);
+
+
+		editForm.remove();
+	});
+
+	coffeeElement.after(editForm);
+}
+function updateLocalStorage(coffees) {
+	localStorage.setItem("coffees", JSON.stringify(coffees));
+}
+const updateCoffees = () => {
+	const coffees = JSON.parse(localStorage.getItem("coffees")) || [];
 	document.querySelector("#coffees").innerHTML = "";
 	const roastSelectionInput = document.querySelector("#roast-selection");
 	const roastSelectionValue = roastSelectionInput.value;
@@ -60,22 +115,25 @@ const updateCoffees = (coffees) => {
 	let filteredCoffees = coffees;
 
 	if (roastSelectionValue !== "all") {
-		filteredCoffees = filteredCoffees.filter((coffee) => {
-			return coffee.roast.toLowerCase().includes(roastSelectionValue.toLowerCase());
+		filteredCoffees = filteredCoffees.filter((coffees) => {
+			return coffees.roast.toLowerCase().includes(roastSelectionValue.toLowerCase());
 		});
 	}
 
 	filteredCoffees = filteredCoffees.filter((coffee) => {
+		if (!searchValue) {
+			return true;
+		}
 		return coffee.name.toLowerCase().includes(searchValue.toLowerCase());
 	});
 
-	for (let coffee of filteredCoffees) {
-		renderCoffeeElement(coffee);
-	}
-
-	filteredCoffees = filteredCoffees.filter((coffee) => {
+	filteredCoffees = filteredCoffees.filter(coffee => {
+		if (!searchValue) {
+			return true;
+		}
 		return coffee.name.toLowerCase().includes(searchValue.toLowerCase());
 	});
+
 
 	for (let coffee of filteredCoffees) {
 		renderCoffeeElement(coffee);
@@ -83,7 +141,7 @@ const updateCoffees = (coffees) => {
 
 	// const coffeesFragment = document.createDocumentFragment();
 	// for (let coffee of filteredCoffees) {
-	// 	coffeesFragment.appendChild(renderCoffeeElement(coffee));
+	//     coffeesFragment.appendChild(renderCoffeeElement(coffee));
 	// }
 	// document.querySelector("#coffees").appendChild(coffeesFragment);
 };
@@ -103,15 +161,14 @@ const handleFilterEvents = (coffees) => {
 	roastSelectionInput.addEventListener("change", (e) => {
 		updateCoffees(coffees);
 	});
+
+
 };
+
 
 // MAIN
 (() => {
-	// window.addEventListener("load", () => {
-	// 	const storedCoffees = JSON.parse(localStorage.getItem("coffees")) || [];
-	// 	renderCoffeeElement(storedCoffees, document.querySelector("#coffees"));
-	// });
-	renderCoffeeElement(coffees)
+	registerCoffees(coffees);
 	updateCoffees(coffees);
 	handleFilterEvents(coffees);
 	const addBtn = document.querySelector("button[data-add]");
@@ -123,4 +180,6 @@ const handleFilterEvents = (coffees) => {
 		nameInput.value = "";
 		roastInput.value = "";
 	});
+
+	
 })();

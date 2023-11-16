@@ -10,12 +10,14 @@
     <link rel="stylesheet" href="./css/bootstrap.min.css">
 </head>
 <body>
-<header class="container">
-    <div class="row">
-        <div class="col">
+<header class="container d-flex">
+    <div class="row align-items-center">
+        <div class="col d-flex justify-content-center align-items-center">
             <h1>Coffee!</h1>
         </div>
-        <div class="col">
+    </div>
+</header>
+        <div class="col d-flex justify-content-center">
             <form>
                 <label for="roast-selection"></label>
                 <select id="roast-selection">
@@ -27,13 +29,14 @@
                 </select>
             </form>
         </div>
-        <div class="col">
-            <div class="input-group input-group-md">
+<div class="container">
+        <div class="row d-flex justify-content-center">
+            <div class=" col align-items-center input-group input-group-md">
                 <input id="search" type="search" aria-label="Search coffees"
                        placeholder="Search coffees...">
             </div>
         </div>
-        <div class="col">
+        <div class="col d-flex justify-content-center ">
             <form id="add-form">
                 <h3><label class="form-label" for="add-name">Coffee Name</label></h3>
                 <input class="form-control" type="text" name="add-name" id="add-name" placeholder="Enter Coffee Name">
@@ -45,20 +48,12 @@
             </form>
 
         </div>
-    </div>
-</header>
+</div>
 
 
-<section class="container">
-    <div class="row">
-        <div class="col">
-            <h3>NAME</h3>
-        </div>
-        <div class="col">
-            <h3>ROAST</h3>
-        </div>
-    </div>
-</section>
+
+
+
 <section class="container">
     <div class="row">
         <div  id="coffees">
