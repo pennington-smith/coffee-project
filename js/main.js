@@ -65,6 +65,10 @@ const renderCoffeeElement = (coffee) => {
 			editButton.classList.add(`removePointer`);
 		})
 	}
+	const innerCoffeeElement = coffeeElement.querySelector('.card');
+	innerCoffeeElement.addEventListener(`click`, e => {
+		innerCoffeeElement.classList.toggle(`flipped`);
+	})
 	document.querySelector("#coffees").prepend(coffeeElement);
 };
 const registerCoffees = (coffees) => {
@@ -156,7 +160,7 @@ const updateCoffees = () => {
 	// }
 	// document.querySelector("#coffees").appendChild(coffeesFragment);
 };
-const handleFilterEvents = (coffees) => {
+const handleFilterEvents = () => {
 	const searchInput = document.querySelector("#search");
 	searchInput.addEventListener(
 		"input",
@@ -164,29 +168,21 @@ const handleFilterEvents = (coffees) => {
 			if (searchInput.value.toLowerCase() === "the") {
 				return;
 			}
-			updateCoffees(coffees);
+			updateCoffees();
 		}, 500)
 	);
 
 	const roastSelectionInput = document.querySelector("#roast-selection");
 	roastSelectionInput.addEventListener("change", (e) => {
-		updateCoffees(coffees);
+		updateCoffees();
 	});
 };
-const flipDaCard = (daCards) => {
-	for (let daCard of daCards) {
-		daCard.addEventListener(`click`, e => {
-			daCard.classList.toggle(`flipped`);
-		})
-	}
-}
-
 
 // MAIN
 (() => {
 	registerCoffees(coffees);
-	updateCoffees(coffees);
-	handleFilterEvents(coffees);
+	updateCoffees();
+	handleFilterEvents();
 	const addBtn = document.querySelector("button[data-add]");
 	const nameInput = document.querySelector("#add-name");
 	const roastInput = document.querySelector(`#add-roast`);
@@ -196,6 +192,4 @@ const flipDaCard = (daCards) => {
 		nameInput.value = "";
 		roastInput.value = "";
 	});
-	const card = document.querySelectorAll(`.flipped`);
-	flipDaCard(card);
 })();
