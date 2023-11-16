@@ -2,15 +2,15 @@ import { debounce } from './utils.js';
 import { formatMoney } from './utils.js';
 
 const coffees = [
-	{ id: 1, name: "Galactic Dawn", roast: "light", description: "An ethereal blend of celestial beans from the highest peaks of Colombia and Ethiopia, offering a cosmic awakening with radiant notes of sunrise citrus and starlit florals.", country: "Colombia and Ethiopia", price: formatMoney(30)},
-	{ id: 2, name: "Nebula Noir", roast: "light", description: "A Dark and enigmatic, this blend swirls together the depths of Indonesian and Guatemalan beans, unveiling a cosmic abyss of rich cocoa, interstellar spices, and a lingering cosmic whisper.", country: "Indonesia and Guatemala", price: formatMoney(30) },
-	{ id: 3, name: "Stellar Symphony", roast: "light", description: "Crafted from the harmonious collision of beans from Costa Rica and Kenya, this cosmic blend harmonizes bright, fruity supernovas with a hint of planetary spice.", country: "Costa Rica and Kenya", price: formatMoney(30) },
-	{ id: 4, name: "Aurora Elation", roast: "medium", description: "Inspired by the dancing lights of the Arctic, this blend melds beans from Iceland and Brazil, resulting in a cosmic cup swirling with caramelized aurora hues and Icelandic purity.", country: "Iceland and Brazil", price: formatMoney(30) },
-	{ id: 5, name: "Celestial Ember", roast: "medium", description: "Embrace the warmth of this cosmic blend, merging beans from Sumatra and Mexico, evoking cosmic embers with dark chocolate richness and smoky constellations.", country: "Sumatra and Mexico", price: formatMoney(30) },
-	{ id: 6, name: "Lunar Eclipse", roast: "medium", description: "A celestial event in a cup, combining the mystique of Ethiopian and Hawaiian beans, revealing a lunar-inspired harmony of floral moonbeams and tropical whispers.", country: "Ethiopia and Hawaii", price: formatMoney(30) },
+	{ id: 1, name: "Galactic Dawn", roast: "light", description: "An ethereal blend of celestial beans and offers a cosmic awakening with radiant notes of sunrise citrus and starlit florals.", country: "Colombia and Ethiopia", price: formatMoney(30)},
+	{ id: 2, name: "Nebula Noir", roast: "light", description: "Dark and enigmatic, this blend unveils a cosmic abyss of rich cocoa, interstellar spices, and a lingering cosmic whisper.", country: "Indonesia and Guatemala", price: formatMoney(30) },
+	{ id: 3, name: "Stellar Symphony", roast: "light", description: "Crafted from Costa Rica and Kenya, this blend emotes bright, fruity supernovas with a hint of planetary spice.", country: "Costa Rica and Kenya", price: formatMoney(30) },
+	{ id: 4, name: "Aurora Elation", roast: "medium", description: "Inspired by the dancing lights of the Arctic, this blend results in a cosmic cup swirling with caramelized aurora hues and Icelandic purity.", country: "Iceland and Brazil", price: formatMoney(30) },
+	{ id: 5, name: "Celestial Ember", roast: "medium", description: "Embrace the warmth of this cosmic blend, evoking cosmic embers with dark chocolate richness and smoky constellations.", country: "Sumatra and Mexico", price: formatMoney(30) },
+	{ id: 6, name: "Lunar Eclipse", roast: "medium", description: "A celestial event in a cup, revealing a lunar-inspired harmony of floral moonbeams and tropical whispers.", country: "Ethiopia and Hawaii", price: formatMoney(30) },
 	{ id: 7, name: "Supernova Spice", roast: "dark", description: "Bursting with cosmic energy, this blend combines Indian and Jamaican beans, igniting the palate with interstellar spices and a fiery caffeine rush.", country: "India and Jamaica", price: formatMoney(30) },
-	{ id: 8, name: "Cosmic Caramel Comet", roast: "dark", description: "A cosmic collision of Brazilian and Colombian beans, leaving a trail of caramel comet dust across the taste buds with a sweet, lingering cosmic embrace.", country: "Brazil and Colombia", price: formatMoney(30) },
-	{ id: 9, name: "Solar Flare Fusion", roast: "dark", description: "Inspired by solar phenomena, this fusion of beans from Guatemala and Peru radiates with bright acidity, citrusy flares, and a solar-powered zest.", country: "Guatemala and Peru", price: formatMoney(30) },
+	{ id: 8, name: "Cosmic Caramel Comet", roast: "dark", description: "A cosmic collision of Brazilian and Colombian beans, leaving a trail of caramel comet dust with a sweet, lingering cosmic embrace.", country: "Brazil and Colombia", price: formatMoney(30) },
+	{ id: 9, name: "Solar Flare Fusion", roast: "dark", description: "Inspired by solar phenomena, this fusion of beans from Guatemala and Peru radiates with bright acidity, citrus flares, and zest.", country: "Guatemala and Peru", price: formatMoney(30) },
 	{ id: 10, name: "Interstellar Infusion", roast: "dark", description: "A journey through the cosmos with beans from Kenya and Mexico, blending cosmic flavors of tropical fruits and high-altitude sweetness.", country: "Kenya and Mexico", price: formatMoney(30) },
 	{ id: 11, name: "Andromeda Awakening", roast: "dark", description: "Named after the distant galaxy, this blend unites Ethiopian and Tanzanian beans, offering a cosmic revelation of vibrant florals and cosmic energy.", country: "Ethiopia and Tanzania", price: formatMoney(30) },
 	{ id: 12, name: "Cosmic Cocoa Cloud", roast: "dark", description: "From the depths of Brazil and Vietnam, a cosmic cloud of chocolatey richness and smoky whispers, evoking the essence of a celestial voyage.", country: "Brazil and Vietnam", price: formatMoney(30) },
@@ -18,13 +18,16 @@ const coffees = [
 	{ id: 14, name: "Cosmic Origin Odyssey", roast: "dark", description: "Embark on a journey through cosmic origins with rotating single-origin beans, unveiling the cosmic stories and flavors of celestial realms.", country: "Brazil and Kenya", price: formatMoney(30) },
 ];
 
-const addCoffee = (coffeeName, roastType) => {
+const addCoffee = (coffeeName, roastType, country, description, price) => {
 	const coffees = JSON.parse(localStorage.getItem("coffees")) || [];
+	price = formatMoney(parseFloat(price));
 	const newCoffee = {
 		name: coffeeName,
 		roast: roastType,
+		country: country,
+		description: description,
+		price: price,
 		userGenerated: true,
-		id: Date.now()
 	};
 	coffees.push(newCoffee);
 	localStorage.setItem("coffees", JSON.stringify(coffees));
@@ -41,15 +44,20 @@ const renderCoffeeElement = (coffee) => {
   					<p>${coffee.description}</p>
   					<p style="font-weight: bold">${coffee.price}</p>
 				</div>
-  				<div class="card-back d-flex flex-column align-items-start p-4">
-					<h5 class="card-title">${coffee.name}</h5>
-					<h6 class="card-subtitle mb-2 text-body-secondary">${coffee.roast}</h6>
-					<p style="font-weight: lighter">${coffee.country}</p>
+  				<div class="card-back d-flex flex-column align-items-start justify-content-start p-4">
+					<div class="d-flex flex-grow-1 flex-column">
+						<h5 class="card-title" id="coffee-name">${coffee.name}</h5>
+						<h6 class="card-subtitle mb-2 text-body-secondary" id="roast-name">${coffee.roast}</h6>
+						<p style="font-weight: lighter">${coffee.country}</p>
+					</div>
+					<div class="btn-parent">
+						${coffee.userGenerated ? `<button class="btn btn-primary delete-btn" data-delete>Delete</button>` : ``}
+						${coffee.userGenerated ? `<button class="btn btn-secondary edit-btn" data-edit>Edit</button>` : ``}
+					</div>
 				</div>
   			</div>
 		</div>
-		${coffee.userGenerated ? `<button class="btn btn-danger" data-delete>Delete</button>` : ``}
-		${coffee.userGenerated ? `<button class="btn btn-secondary" data-edit>Edit</button>` : ``}
+	
     `;
 	const deleteButton = coffeeElement.querySelector(`button[data-delete]`);
 	const editButton = coffeeElement.querySelector(`button[data-edit]`);
@@ -67,6 +75,10 @@ const renderCoffeeElement = (coffee) => {
 	}
 	const innerCoffeeElement = coffeeElement.querySelector('.card');
 	innerCoffeeElement.addEventListener(`click`, e => {
+		console.log(e);
+		if (e.target.classList.contains('edit-btn') || e.target.classList.contains('delete-btn')) {
+			return;
+		}
 		innerCoffeeElement.classList.toggle(`flipped`);
 	})
 	document.querySelector("#coffees").prepend(coffeeElement);
@@ -89,28 +101,55 @@ function removeFromLocalStorage(coffeeId) {
 function renderEditForm(coffee, coffeeElement) {
 	const editForm = document.createElement("form");
 	editForm.innerHTML = `
-            <label for="editName">Name:</label>
-            <input type="text" id="editName" value="${coffee.name}" required>
-            <label for="editRoast">Roast:</label>
-            <input type="text" id="editRoast" value="${coffee.roast}" required>
-            <button type="submit" class="btn btn-primary" data-save>Save</button>
+		<div class="container edit-container">
+			<div class="row flex-column gap-1">
+				<div class="col">
+					<label for="editName">Name </label>
+					<input class="form-control me-2" type="text" id="editName" value="${coffee.name}" required>
+				</div>
+				<div class="col">
+					<label for="editRoast">Roast </label>
+					<input class="form-control me-2" type="text" id="editRoast" value="${coffee.roast}" required>
+				</div>
+				<div class="col">
+					<label for="editCountry">Country </label>
+					<input class="form-control me-2" type="text" id="editCountry" value="${coffee.country}" required>
+				</div>
+				<div class="col">
+					<label for="editDescription">Description </label>
+					<input class="form-control me-2" type="text" id="editDescription" value="${coffee.description}" required>
+				</div>
+				<div class="col">
+					<label for="editPrice">Price </label>
+					<input class="form-control me-2" type="text" id="editPrice" value="${coffee.price}" required>
+				</div>
+				<div class="col">
+					<button type="submit" class="btn btn-primary save-btn" data-save>Save</button>
+				</div>
+			</div>
+		</div>
         `;
 	editForm.addEventListener("submit", e => {
 		e.preventDefault();
 		const oldCoffeeName = coffee.name;
 		let coffees = JSON.parse(localStorage.getItem("coffees")) || [];
-		coffees = coffees.filter(coffee=> coffee.name !== oldCoffeeName);
 
 		coffee.name = editForm.querySelector("#editName").value;
 		coffee.roast = editForm.querySelector("#editRoast").value;
+		coffee.country = editForm.querySelector("#editCountry").value;
+		coffee.description = editForm.querySelector("#editDescription").value;
+		coffee.price = editForm.querySelector("#editPrice").value;
 
 		coffees.push({
 			name: coffee.name,
 			roast: coffee.roast,
+			country: coffee.country,
+			description: coffee.description,
+			price: coffee.price,
 			userGenerated: true
 		});
-		const editedName = coffeeElement.querySelector(".col:first-child p").textContent = coffee.name;
-		const editedRoast = coffeeElement.querySelector(".col:nth-child(2) p").textContent = coffee.roast;
+
+		addCoffee(coffee.name, coffee.roast, coffee.country, coffee.description, coffee.price)
 		localStorage.setItem("coffees", JSON.stringify(coffees));
 		editForm.remove();
 	});
@@ -178,6 +217,26 @@ const handleFilterEvents = () => {
 	});
 };
 
+
+
+
+
+function reveal() {
+	let reveals = document.querySelectorAll(".reveal");
+	for (let i = 0; i < reveals.length; i++) {
+		let windowHeight = window.innerHeight;
+		let elementTop = reveals[i].getBoundingClientRect().top;
+		let elementVisible = 150;
+		if (elementTop < windowHeight - elementVisible) {
+			reveals[i].classList.add("active");
+		} else {
+			reveals[i].classList.remove("active");
+		}
+	}
+}
+//
+// let myTimeout = setTimeout(function, 10000);
+
 // MAIN
 (() => {
 	registerCoffees(coffees);
@@ -186,10 +245,17 @@ const handleFilterEvents = () => {
 	const addBtn = document.querySelector("button[data-add]");
 	const nameInput = document.querySelector("#add-name");
 	const roastInput = document.querySelector(`#add-roast`);
+	const countryInput = document.querySelector(`#country-name`);
+	const descriptionInput = document.querySelector(`#description`);
+	const priceInput = document.querySelector(`#price`);
 	addBtn.addEventListener("click", (e) => {
 		e.preventDefault();
-		addCoffee(nameInput.value, roastInput.value);
+		addCoffee(nameInput.value, roastInput.value, countryInput.value, descriptionInput.value, priceInput.value);
 		nameInput.value = "";
 		roastInput.value = "";
+		countryInput.value = "";
+		descriptionInput.value = "";
+		priceInput.value = "";
 	});
+	window.addEventListener("scroll", reveal);
 })();
